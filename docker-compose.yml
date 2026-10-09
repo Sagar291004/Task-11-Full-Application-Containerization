@@ -1,0 +1,19 @@
+
+services:
+  api:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    environment:
+      MODEL_PATH: /app/task6_cnn_model.keras
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "8501:8501"
+    environment:
+      API_URL: http://api:5000/predict
+    depends_on:
+      - api
+    restart: unless-stopped
